@@ -55,6 +55,22 @@ class logWriter{
             return $log_str;
         }
     }
+    function put_inline($str, $filename = null){
+        if($this -> off){
+            return;
+        }
+        if($filename === null){
+            $filename = $this -> default_filename;
+        }
+        if(is_scalar($str) === false){
+            $str = print_r($str, true);
+        }
+        try{
+            @file_put_contents($this -> folder.$filename, $str, FILE_APPEND);
+        }catch(Exception $e){
+            // report about error
+        }
+    }    
     private function getClientIP(){
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
